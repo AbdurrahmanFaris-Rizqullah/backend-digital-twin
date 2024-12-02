@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Parameters {
+  id        Int      @id @default(autoincrement())
+  pointName String   // Nama lokasi: situ, wtp, filtrasi, groundTank, dorm
+  timestamp DateTime @default(now())
+  ph        Float
+  turbidity Float    // Nilai NTU
+  tds       Float    // Nilai ppm
+}
+
+model WaterFlow {
+  id        Int      @id @default(autoincrement())
+  timestamp DateTime @default(now())
+  flowRate  Float    // Debit air dalam liter/jam
+}
+
+model WaterLevel {
+  id         Int      @id @default(autoincrement())
+  timestamp  DateTime @default(now())
+  waterLevel Float    // Level air dalam liter
+}
+
+model Efficiency {
+  id                 Int      @id @default(autoincrement())
+  timestamp          DateTime @default(now())
+  dormId             Int      // ID Asrama
+  waterSupplied      Float    // Air yang disuplai (liter)
+  waterUsedEffectively Float  // Air yang digunakan dengan efisien (liter)
+  efficiency         Float    // Persentase efisiensi (%)
+}
+
+model SupplyVsDemand {
+  id           Int      @id @default(autoincrement())
+  timestamp    DateTime @default(now())
+  waterSupplied Float    // Jumlah air yang disuplai (liter)
+  waterDemand   Float    // Jumlah air yang dibutuhkan (liter)
+  status       String    // Status: Normal, Over Demand, Over Supply
+}
+
