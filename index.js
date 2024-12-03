@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const parametersRouter = require("./Routers/paramatersRouter");
+const monitoringRouter = require("./Routers/monitoringRouter")
 const prisma = require("./utils/prismaClient");  // Mengimpor prisma dari utils.js
 const axios = require('axios');
 
@@ -9,6 +10,7 @@ const PORT = 3000;
 
 // Menambahkan route untuk mendapatkan data berdasarkan pointName
 app.use("/parameters", parametersRouter);
+app.use("/monitoring", monitoringRouter);
 
 // Fungsi untuk mengambil data dari database dan mengirimkannya ke endpoint setiap 10 detik
 const fetchDataAndSend = async () => {
