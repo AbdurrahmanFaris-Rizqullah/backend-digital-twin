@@ -1,4 +1,5 @@
 const prisma = require("../utils/prismaClient");
+const err = require("../middlewares/errorHandler");
 
 // Fungsi untuk generate parameter random dengan batasan sesuai dengan point monitoring
 const generateRandomParameter = (pointName) => {

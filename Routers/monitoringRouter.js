@@ -1,10 +1,5 @@
 const express = require('express');
-const {
-  getWaterFlow,
-  getWaterLevel,
-  getEfficiency,
-  getSupplyVsDemand,
-} = require('../Controllers/monitoringController');
+const { getWaterFlow, getWaterLevel, getEfficiency, getSupplyVsDemand } = require('../Controllers/monitoringController');
 const router = express.Router();
 
 // Rute spesifik untuk setiap jenis sensor

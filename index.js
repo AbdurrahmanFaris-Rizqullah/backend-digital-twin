@@ -46,9 +46,60 @@ const fetchDataAndSend = async () => {
     console.error("Error in fetchDataAndSend:", error.message);
   }
 };
-
-// Jalankan otomatis setiap 10 detik
+// // Jalankan otomatis setiap 10 detik
 setInterval(fetchDataAndSend, 10000); // 10000ms = 10 detik
+
+
+// Fungsi untuk generate Water Flow dan Water Level
+const dataGenerator = async () => {
+  try {
+    const currentTime = new Date();
+
+    // Generate random Water Flow data
+    const waterFlow = Math.random() * (20000 - 1000) + 1000; // Debit aktual (1000-20000 liter/jam)
+
+    // Total kebutuhan air
+    const totalDemand = 40 * 4 * 120; // 19200 liter/jam
+
+    // Calculate Efficiency
+    const efficiency = (waterFlow / totalDemand) * 100;
+    const efficiencyStatus = efficiency > 100 ? "Wasteful" : "Efficient";
+
+    // Calculate Supply
+    const supply = (waterFlow * 10) / totalDemand;
+    const supplyStatus = supply > 1 ? "Insufficient" : "Sufficient";
+
+    // Insert all data into the database
+    await prisma.monitoring.create({
+      data: {
+        timestamp: currentTime,
+        waterflow: waterFlow,
+        waterlevel: totalDemand, // Menyesuaikan dengan kebutuhan total
+        efficiency: efficiency,
+        efficiencyStatus: efficiencyStatus,
+        watersupply: supply,
+        supplyStatus: supplyStatus,
+      },
+    });
+
+    console.log(
+      `Generated data at ${currentTime} | Water Flow: ${waterFlow.toFixed(
+        2
+      )}L/h, Efficiency: ${efficiency.toFixed(
+        2
+      )}% (${efficiencyStatus}), Supply Status: ${supplyStatus}`
+    );
+  } catch (error) {
+    console.error("Error generating data:", error);
+  }
+};
+
+// Run data generation every 10 seconds
+setInterval(dataGenerator, 10000);
+
+
+
+
 
 // Start the server
 app.listen(PORT, () => {

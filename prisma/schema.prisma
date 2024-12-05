@@ -22,32 +22,15 @@ model Parameters {
   tds       Float    // Nilai ppm
 }
 
-model WaterFlow {
-  id        Int      @id @default(autoincrement())
-  timestamp DateTime @default(now())
-  flowRate  Float    // Debit air dalam liter/jam
+model monitoring {
+  id              Int      @id @default(autoincrement())
+  timestamp       DateTime @default(now())
+  waterflow       Float    // Debit air dalam liter/jam
+  waterlevel      Float    // Level air dalam liter
+  efficiency      Float    // Persentase efisiensi (%)
+  watersupply     Float    // Jumlah air yang disuplai (liter)
+  efficiencyStatus String   // Status efisiensi
+  supplyStatus     String   // Status suplai
 }
 
-model WaterLevel {
-  id         Int      @id @default(autoincrement())
-  timestamp  DateTime @default(now())
-  waterLevel Float    // Level air dalam liter
-}
-
-model Efficiency {
-  id                 Int      @id @default(autoincrement())
-  timestamp          DateTime @default(now())
-  dormId             Int      // ID Asrama
-  waterSupplied      Float    // Air yang disuplai (liter)
-  waterUsedEffectively Float  // Air yang digunakan dengan efisien (liter)
-  efficiency         Float    // Persentase efisiensi (%)
-}
-
-model SupplyVsDemand {
-  id           Int      @id @default(autoincrement())
-  timestamp    DateTime @default(now())
-  waterSupplied Float    // Jumlah air yang disuplai (liter)
-  waterDemand   Float    // Jumlah air yang dibutuhkan (liter)
-  status       String    // Status: Normal, Over Demand, Over Supply
-}
 

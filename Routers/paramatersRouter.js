@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { insertParameters, getParameters, insertParametersAuto, getParametersByDuration, getAllParametersByDuration } = require("../Controllers/parametersController");
+const { insertParameters, getParameters, insertParametersAuto, getParametersByDuration } = require("../Controllers/parametersController");
 
 // Auto-generate parameter data
 router.post("/:pointName", async (req, res, next) => {
